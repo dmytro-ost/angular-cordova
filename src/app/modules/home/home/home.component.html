@@ -1,1 +1,58 @@
-<p>home works!</p>
+<div class="users">
+    <div class="header">
+        <button (click)="onSave()" color="accent" mat-raised-button type="button" matTooltip="Save Data">
+            <mat-icon>save</mat-icon>
+            Save Data
+        </button>
+        <button (click)="onAddNew()" color="accent" mat-raised-button type="button" matTooltip="Add User">
+            <mat-icon>add</mat-icon>
+            Add New User
+        </button>
+    </div>
+    <ng-container *ngIf="(usersList$ | async) as users">
+        <div *ngIf="users.length">
+            <table class="table">
+                <thead>
+                    <tr class="head">
+                        <th>No.</th>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Verified</th>
+                        <th>Date of Birth</th>
+                        <th>Created</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="row" *ngFor="let user of users; index as i; trackBy: trackByFn">
+                        <td class="field order">{{ i+1 }}</td>
+                        <td class="field id">{{ user.id }}</td>
+                        <td class="field firstname">{{ user.firstName }}</td>
+                        <td class="field lastname">{{ user.lastName }}</td>
+                        <td class="field email">{{ user.email }}</td>
+                        <td class="field checkbox">
+                            <mat-checkbox [checked]="user.emailVerified" [disabled]="true"></mat-checkbox>
+                        </td>
+                        <td class="field date">{{ user.dateOfBirth }}</td>
+                        <td class="field date">{{ user.createDate }}</td>
+                        <td class="field action">
+                            <button (click)="onEdit(user)" color="primary" mat-icon-button type="button"
+                                matTooltip="Edit User">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </td>
+                        <td class="field action">
+                            <button (click)="onDelete(user)" color="primary" mat-icon-button type="button"
+                                matTooltip="Delete User">
+                                <mat-icon>delete_forever</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-container>
+</div>

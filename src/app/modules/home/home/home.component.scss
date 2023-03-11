@@ -1,0 +1,43 @@
+.header {
+    padding: 20px 0;
+    display: flex;
+    justify-content: flex-end;
+
+    button+button {
+        margin-left: 10px;
+    }
+
+    .mat-icon {
+        vertical-align: text-top;
+        font-size: 1.25em;
+    }
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+
+    .head {
+        background: #3f51b5;
+        color: white;
+        font-size: 17px;
+
+        & th {
+            padding: 10px 0;
+        }
+    }
+
+    .row:nth-child(odd) {
+        background-color: #d0d5d5;
+    }
+
+    .field {
+        padding: 4px;
+    }
+
+    .checkbox,
+    .date,
+    .action {
+        text-align: center;
+    }
+}

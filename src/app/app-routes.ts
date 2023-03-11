@@ -1,8 +1,7 @@
 export const ROUTE = {
     HOME: '',
     ADD: 'add',
-    EDITE: 'edit',
+    EDIT: 'edit',
     DELETE: 'delete',
-    NOT_FOUND: '404',
-    ANY_OTHER: '**'
+    NOT_FOUND: '404'
 }
