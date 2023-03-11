@@ -29,7 +29,7 @@ export class HomeComponent {
   }
 
   onSave(): void {
-
+    this.userService.saveUsers().subscribe();
   }
 
   onAddNew(): void {
