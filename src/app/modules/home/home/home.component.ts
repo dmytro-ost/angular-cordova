@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ROUTE } from 'src/app/app-routes';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 
@@ -20,11 +21,11 @@ export class HomeComponent {
   ) { }
 
   onEdit(user: User): void {
-    console.log('edit', user);
+    this.router.navigate([ROUTE.EDIT], { queryParams: { id: user.id } });
   }
 
   onDelete(user: User): void {
-    console.log('delete', user);
+    this.router.navigate([ROUTE.DELETE], { queryParams: { id: user.id } });
   }
 
   onSave(): void {
@@ -32,7 +33,7 @@ export class HomeComponent {
   }
 
   onAddNew(): void {
-    this.router.navigate(['add']);
+    this.router.navigate([ROUTE.ADD]);
   }
 
   trackByFn(index: number) {
@@ -40,5 +41,3 @@ export class HomeComponent {
   }
 
 }
-// new Date().toISOString().slice(0,10)
-// uuid

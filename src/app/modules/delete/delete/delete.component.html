@@ -1,1 +1,8 @@
-<p>delete works!</p>
+<h1>This user will be deleted:</h1>
+<app-user-form 
+    [user]="user" 
+    [actionButton]="'Delete Permanently'" 
+    [isReadOnly]="true" 
+    (submit)="onDelete()"
+    (cancel)="onCancel()">
+</app-user-form>

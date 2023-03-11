@@ -2,10 +2,10 @@ import apiConfig from 'src/config';
 import { Injectable } from '@angular/core';
 import { SpinnerService } from './spinner.service';
 import { LocalStorageService } from './local-storage.service';
-import { BehaviorSubject, EMPTY, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
 import { User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
-import { catchError, delay, finalize, retry, share, tap } from 'rxjs/operators';
+import { catchError, finalize, retry, share, tap } from 'rxjs/operators';
 
 
 
@@ -14,8 +14,8 @@ import { catchError, delay, finalize, retry, share, tap } from 'rxjs/operators';
 })
 export class UserService {
   private readonly baseUrl: string = apiConfig.apiUrl;
-
   private readonly _store$ = new BehaviorSubject<User[]>([]);
+
   store$ = this._store$ as Observable<User[]>;
 
   constructor(
@@ -24,12 +24,12 @@ export class UserService {
     private readonly spinnerService: SpinnerService
   ) { }
 
-  public loadUsers(): Observable<User[]> {
+  loadUsers(): Observable<User[]> {
     this.spinnerService.show();
     return this.http.get<User[]>(this.baseUrl)
       .pipe(
         share(),
-        retry(3),
+        retry(1),
         tap(data => {
           this.localStorageService.setData<User[]>(data);
           this._store$.next(data);
@@ -44,7 +44,7 @@ export class UserService {
       );
   }
 
-  public saveUsers(): Observable<void> {
+  saveUsers(): Observable<void> {
     this.spinnerService.show();
     return this.http.post<void>(this.baseUrl, this.localStorageService.getData<User[]>())
       .pipe(
@@ -56,8 +56,34 @@ export class UserService {
       );
   }
 
-  public getUsersList(): User[] {
-    return this.localStorageService.getData<User[]>();
+  addUser(user: User) {
+    const newStore = this._store$.getValue();
+    newStore.unshift(user);
+
+    this.localStorageService.setData(newStore);
+    this._store$.next(newStore);
+  }
+
+  deleteUser(id: number): void {
+    const newStore = this._store$.getValue()
+      .filter(user => user.id !== id);
+
+    this.localStorageService.setData(newStore);
+    this._store$.next(newStore);
+  }
+
+  getUserById(id: number): User {
+    return this._store$.getValue()
+      .filter(user => user.id === id)[0];
+  }
+
+  updateUser(newUser: User) {
+    const newStore = this._store$.getValue();
+    let index = newStore.findIndex(user => user.id === newUser.id);
+    newStore[index] = newUser;
+
+    this.localStorageService.setData(newStore);
+    this._store$.next(newStore);
   }
 
 }

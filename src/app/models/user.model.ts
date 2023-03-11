@@ -4,6 +4,6 @@ export interface User {
     lastName: string;
     email: string;
     emailVerified: boolean;
-    dateOfBirth?: string;
-    createDate?: string;
+    dateOfBirth: Date;
+    createDate: Date;
 }
