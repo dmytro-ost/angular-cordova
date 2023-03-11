@@ -1,6 +1,6 @@
 # Test Task
 
-Task:  Frontend Test Task.docx
+Task:  Test_task_on_Angular.docx
 
 Node:  v16.18.0
 
